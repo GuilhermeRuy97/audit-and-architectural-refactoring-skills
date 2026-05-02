@@ -225,6 +225,8 @@ __marimo__/
 /venv/
 venv/
 node_modules/
+.agents/skills/skill-creator/
+skills-lock.json
 
 # SQLite
 *.db
