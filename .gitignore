@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Environment
+.env
+./.env/
+./.env.local
+.venv/
+/venv/
+venv/
+node_modules/
+
+# SQLite
+*.db
+instance/
