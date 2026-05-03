@@ -27,7 +27,7 @@ Date: Sun, 03 May 2026 17:50:03 GMT
 Connection: close
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NzgzMDYwMywiZXhwIjoxNzc3ODU5NDAzfQ.jEhMBfQHoRyHtlY4HLxQWN05mcda78bykPn2C6svqBs"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsIiIsImlhdCI6MTc3NzgzMDYwMywiZXhwIjoxNzc3ODU5NDAzfQ.jEhMBfQHoRyHtlY4HLxQWN05mcda78bykPn2C6svqBs"
 }
 ```
 
@@ -52,32 +52,33 @@ Connection: close
 ## Approved
 
 ```
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
-Content-Length: 36
-ETag: W/"24-GNDyEGK1yBKJB1sFHYU2n5ZGC54"
-Date: Sun, 03 May 2026 17:51:04 GMT
+Content-Length: 35
+ETag: W/"23-pcPozAYVr0Z8Hc9ZB5uZF+mIuHM"
+Date: Sun, 03 May 2026 18:00:20 GMT
 Connection: close
 
 {
-  "error": "Invalid or expired token"
+  "msg": "Success",
+  "enrollment_id": 4
 }
 ```
 
 ## Denied
 
 ```
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
-Content-Length: 36
-ETag: W/"24-GNDyEGK1yBKJB1sFHYU2n5ZGC54"
-Date: Sun, 03 May 2026 17:51:25 GMT
+Content-Length: 74
+ETag: W/"4a-X7OASrMg4i+4stHEHR2WTdKa8f8"
+Date: Sun, 03 May 2026 18:00:42 GMT
 Connection: close
 
 {
-  "error": "Invalid or expired token"
+  "error": "Payment denied — only Visa cards accepted in this simulation"
 }
 ```
 
@@ -89,7 +90,7 @@ X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
 Content-Length: 35
 ETag: W/"23-5acMW0iwqotvKDNixkkFKwa08HY"
-Date: Sun, 03 May 2026 17:51:37 GMT
+Date: Sun, 03 May 2026 18:01:01 GMT
 Connection: close
 
 {
@@ -102,31 +103,51 @@ Connection: close
 ## Financial Report
 
 ```
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
-Content-Length: 36
-ETag: W/"24-GNDyEGK1yBKJB1sFHYU2n5ZGC54"
-Date: Sun, 03 May 2026 17:51:48 GMT
+Content-Length: 236
+ETag: W/"ec-sVvG8nBfmOO12w/s+6jXhYvzIv8"
+Date: Sun, 03 May 2026 18:01:09 GMT
 Connection: close
 
-{
-  "error": "Invalid or expired token"
-}
+[
+  {
+    "course": "Clean Architecture",
+    "revenue": 997,
+    "students": [
+      {
+        "student": "Leonan",
+        "paid": 997
+      }
+    ]
+  },
+  {
+    "course": "Docker",
+    "revenue": 1491,
+    "students": [
+      {
+        "student": "Leonan",
+        "paid": 497
+      },
+      }
+    ]
+  }
+]
 ```
 
 ## Delete User
 
 ```
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: application/json; charset=utf-8
-Content-Length: 36
-ETag: W/"24-GNDyEGK1yBKJB1sFHYU2n5ZGC54"
-Date: Sun, 03 May 2026 17:52:03 GMT
+Content-Length: 55
+ETag: W/"37-tUffHnBPPYnDMEOFZRza3qLf4SA"
+Date: Sun, 03 May 2026 18:01:35 GMT
 Connection: close
 
 {
-  "error": "Invalid or expired token"
+  "msg": "User and related records deleted successfully"
 }
 ```
