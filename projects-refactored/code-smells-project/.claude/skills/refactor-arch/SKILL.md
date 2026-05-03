@@ -153,12 +153,60 @@ DB tables:     produtos, usuarios, pedidos, itens_pedido
 
 5. Create a `.env.example` file listing all required environment variables (without values).
 
-6. **Validate the result:**
-   - Verify the application can start without import errors (check for missing dependencies, circular imports, undefined names).
-   - Verify each original endpoint exists in the new routing layer.
-   - Verify no finding from the audit report remains unresolved.
+6. **Create a virtual environment and install dependencies** inside the refactored project directory:
 
-7. Print the Phase 3 summary:
+   **Python projects:**
+   ```bash
+   cd projects-refactored/<name>
+   python -m venv .venv
+
+   # Activate — Windows
+   .venv\Scripts\activate
+   # Activate — macOS / Linux / Git Bash
+   source .venv/bin/activate
+
+   pip install -r requirements.txt
+   ```
+
+   **Node.js projects:**
+   ```bash
+   cd projects-refactored/<name>
+   npm install
+   ```
+
+   If the install fails, diagnose and fix `requirements.txt` / `package.json` before continuing — a failed install means the app cannot start and validation cannot proceed.
+
+7. **Validate the result** using `curl` — not a browser (browsers can't send auth headers or JSON bodies):
+
+   ```bash
+   # Python: use the venv interpreter
+   .venv/Scripts/python -c "import app"   # Windows
+   .venv/bin/python -c "import app"       # macOS/Linux
+   # Node.js:
+   node -e "require('./app')"
+
+   # Health check — always public
+   curl http://localhost:5000/health
+
+   # Login to get a token
+   curl -X POST http://localhost:5000/login \
+     -H "Content-Type: application/json" \
+     -d '{"email":"...","senha":"..."}'
+
+   # Protected endpoint — paste token from login
+   curl http://localhost:5000/<protected-route> \
+     -H "Authorization: Bearer <token>"
+   ```
+
+   Expected behavior during testing (these are correct, not errors):
+   - `401` on a protected route without a token ✓ auth is working
+   - `405` on `GET /login` ✓ login only accepts POST
+   - `404` on `/favicon.ico` ✓ normal browser auto-request, ignore it
+
+   Verify every original endpoint returns a non-500 response.
+   Verify no finding from the audit report remains unresolved.
+
+8. Print the Phase 3 summary:
    ```
    ================================
    PHASE 3: REFACTORING COMPLETE
@@ -175,6 +223,7 @@ DB tables:     produtos, usuarios, pedidos, itens_pedido
    … (one line per finding)
 
    ## Validation
+   ✓ venv created and dependencies installed
    ✓ Application starts without errors
    ✓ All N original endpoints preserved in routes/
    ✓ Zero findings remaining
@@ -211,5 +260,7 @@ Use these as self-checks before moving to the next phase — not as a post-hoc a
 - [ ] Business logic is in controllers, not route handlers
 - [ ] At least one model per domain entity
 - [ ] `.env.example` created
+- [ ] Virtual environment created (`.venv/` for Python, `node_modules/` for Node.js)
+- [ ] `pip install -r requirements.txt` / `npm install` completed without errors
 - [ ] Every finding from Phase 2 is resolved (cross-check the list)
 - [ ] All original endpoints are reachable in the new routing layer

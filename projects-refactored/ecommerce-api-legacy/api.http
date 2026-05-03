@@ -1,31 +1,88 @@
 @baseUrl = http://localhost:3000
 
-### Checkout - sucesso
-POST {{baseUrl}}/api/checkout
+# HOW TO USE
+# 1. Open a terminal and run: node src/app.js
+# 2. Install the "REST Client" extension in VS Code (ms-vscode.rest-client)
+# 3. Click "Send Request" above any ### block to run it
+# 4. Run "Login" first, then paste the returned token into @token below
+
+@token = PASTE_TOKEN_HERE
+
+### Health check
+GET {{baseUrl}}/health
+
+###
+
+# ── AUTH ──────────────────────────────────────────────
+
+### Login (seed admin — password is "changeme" by default)
+POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "usr": "Guilherme",
-  "eml": "gui@fullcycle.com.br",
-  "pwd": "senhaforte",
-  "c_id": 2,
+  "email": "leonan@fullcycle.com.br",
+  "password": "changeme"
+}
+
+###
+
+### Register a new student account
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme",
+  "email": "gui@fullcycle.com.br",
+  "password": "senhaforte"
+}
+
+###
+
+# ── CHECKOUT ──────────────────────────────────────────
+
+### Checkout - approved (Visa card starts with 4)
+POST {{baseUrl}}/api/checkout
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "course_id": 2,
   "card": "4111222233334444"
 }
 
-### Checkout - pagamento recusado
+###
+
+### Checkout - denied (non-Visa card starts with 5)
+POST {{baseUrl}}/api/checkout
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "course_id": 1,
+  "card": "5111222233334444"
+}
+
+###
+
+### Checkout - no token (expect 401)
 POST {{baseUrl}}/api/checkout
 Content-Type: application/json
 
 {
-  "usr": "João",
-  "eml": "joao@teste.com",
-  "pwd": "123",
-  "c_id": 1,
-  "card": "5111222233334444"
+  "course_id": 1,
+  "card": "4111111111111111"
 }
 
-### Relatório financeiro administrativo
-GET {{baseUrl}}/api/admin/financial-report
+###
 
-### Deletar usuário
-DELETE {{baseUrl}}/api/users/1
+# ── ADMIN ─────────────────────────────────────────────
+
+### Financial report (admin only — expect 403 with a student token)
+GET {{baseUrl}}/api/admin/financial-report
+Authorization: Bearer {{token}}
+
+###
+
+### Delete user (admin only)
+DELETE {{baseUrl}}/api/users/2
+Authorization: Bearer {{token}}

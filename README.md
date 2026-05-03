@@ -114,6 +114,14 @@ src/
 ## Manual Analysis
 
 > CHANGE ME
+### Code Smells Project
+[reports\audit-project-1.md](reports/audit-project-1.md)
+### Ecommerce API Legacy
+[reports\audit-project-2.md](reports/audit-project-2.md)
+### Task Manager API
+[reports\audit-project-3.md](reports/audit-project-3.md)
+
+
 Lista dos problemas identificados manualmente em cada projeto
 Classificação por severidade
 Justificativa de por que cada problema é relevante
